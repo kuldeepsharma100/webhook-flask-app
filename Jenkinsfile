@@ -31,8 +31,11 @@ pipeline {
 
         stage('Deploy to EC2') {
             steps {
-             
-                    sh 'docker run -d -p 5000:5000 $IMAGE_NAME'
+                    sh '''
+                        docker stop flaskapp || true &&
+                        docker rm flaskapp || true &&
+
+                        docker run -d -p 5000:5000 $IMAGE_NAME'''
         
             }
         }
